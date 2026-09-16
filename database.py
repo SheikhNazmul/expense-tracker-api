@@ -1,9 +1,14 @@
 import os
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./expense_tracker.db")
+load_dotenv(".env.local")
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL must be set in .env.local or the deployment environment")
 
 engine_kwargs = {}
 if DATABASE_URL.startswith("sqlite"):
