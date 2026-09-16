@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import os
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -8,7 +9,7 @@ from sqlalchemy.orm import Session
 import models
 from database import get_db
 
-SECRET_KEY = "A2U-dJG_hK3RYFfoeKzVfwykzLiFGkA0OBXOer7JW_o"
+SECRET_KEY = os.getenv("SECRET_KEY", "local-development-secret-change-me")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
