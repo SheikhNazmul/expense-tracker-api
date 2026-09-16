@@ -6,7 +6,7 @@ from auth import decode_access_token
 from database import get_db
 from models import User
 
-# This tells Swagger UI to look for the token at the /auth/login endpoint
+# This tells Swagger UI to look for the token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 def get_current_user(

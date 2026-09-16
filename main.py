@@ -3,7 +3,7 @@ from database import Base, engine
 from router.auth import router as auth_router
 from router.transactions import router as transaction_router
 
-# Create tables in the database
+# Create tables in database
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Expense Tracker API")

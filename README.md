@@ -17,7 +17,7 @@ FastAPI midterm assignment implementing JWT authentication and protected transac
 ```powershell
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-uvicorn main:expensestrack --reload
+uvicorn main:app --reload
 ```
 
 Open Swagger at http://127.0.0.1:8000/docs.
@@ -63,7 +63,7 @@ Set the environment variables:
 Render start command:
 
 ```text
-uvicorn main:expensestrack --host 0.0.0.0 --port $PORT
+uvicorn main:app --host 0.0.0.0 --port $PORT
 ```
 
 ## Tests
