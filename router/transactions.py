@@ -11,10 +11,6 @@ from security import get_current_user
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 
-
-
-router = APIRouter(prefix="/transactions", tags=["Transactions"])
-
 class TransactionCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     amount: float = Field(..., gt=0, description="Amount must be positive")
@@ -69,6 +65,26 @@ def get_all_transactions(
 ):
     return db.query(Transaction).filter(Transaction.owner_id == current_user.id).all()
 
+@router.get("/filter", response_model=List[TransactionResponse])
+def filter_transactions(
+    type: Optional[str] = Query(default=None),
+    category: Optional[str] = Query(default=None),
+    minimum_amount: Optional[float] = Query(default=None, ge=0),
+    maximum_amount: Optional[float] = Query(default=None, ge=0),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    query = db.query(Transaction).filter(Transaction.owner_id == current_user.id)
+    if type:
+        query = query.filter(Transaction.type == type)
+    if category:
+        query = query.filter(Transaction.category == category)
+    if minimum_amount is not None:
+        query = query.filter(Transaction.amount >= minimum_amount)
+    if maximum_amount is not None:
+        query = query.filter(Transaction.amount <= maximum_amount)
+    return query.all()
+
 @router.get("/{transaction_id}", response_model=TransactionResponse)
 def get_transaction(
     transaction_id: int,
@@ -121,25 +137,3 @@ def delete_transaction(
     db.delete(db_transaction)
     db.commit()
     return {"message": "Transaction deleted successfully"}
-
-@router.get("/filter", response_model=List[TransactionResponse])
-def filter_transactions(
-    type: Optional[str] = Query(default=None),
-    category: Optional[str] = Query(default=None),
-    minimum_amount: Optional[float] = Query(default=None, ge=0),
-    maximum_amount: Optional[float] = Query(default=None, ge=0),
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    query = db.query(Transaction).filter(Transaction.owner_id == current_user.id)
-
-    if type:
-        query = query.filter(Transaction.type == type)
-    if category:
-        query = query.filter(Transaction.category == category)
-    if minimum_amount is not None:
-        query = query.filter(Transaction.amount >= minimum_amount)
-    if maximum_amount is not None:
-        query = query.filter(Transaction.amount <= maximum_amount)
-    
-    return query.all()

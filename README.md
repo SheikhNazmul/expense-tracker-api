@@ -2,6 +2,8 @@
 ```markdown
 # Expense Tracker API
 
+This repository includes a full-stack personal expense tracker: a FastAPI service and a responsive React dashboard in `frontend/`.
+
 A RESTful API for managing personal income and expenses built with FastAPI, SQLAlchemy, and Neon.
 
 ## 📋 Overview
@@ -53,6 +55,12 @@ expense-tracker-api/
 ```
 
 ##  Installation
+
+For frontend setup and local development, see [frontend/README.md](frontend/README.md).
+
+### Deploy both services on Render
+
+The root `render.yaml` defines the FastAPI service and the static React frontend as a Render Blueprint. Push the repository to GitHub, then create or sync a Blueprint in the Render Dashboard for this repository and the `main` branch. Render builds the frontend with the API URL and deploys both services. The frontend URL is `https://expense-tracker-frontend.onrender.com`; update `FRONTEND_ORIGINS` in `render.yaml` if Render assigns a different URL. Keep the API's existing `DATABASE_URL` configured in Render.
 
 ### Prerequisites
 - Python 3.8+
@@ -106,6 +114,7 @@ expense-tracker-api/
 |----------|-------------|----------|
 | `DATABASE_URL` | PostgreSQL connection string | Yes |
 | `SECRET_KEY` | Secret key for JWT token generation | Yes |
+| `FRONTEND_ORIGINS` | Comma-separated allowed frontend origins for CORS (defaults to `http://localhost:5173`) | No |
 
 ##  API Endpoints
 
