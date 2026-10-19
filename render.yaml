@@ -10,7 +10,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: FRONTEND_ORIGINS
-        value: https://expense-tracker-frontend.onrender.com
+        value: https://expense-tracker-frontend.onrender.com,https://sheikhnazmul.github.io
   - type: web
     name: expense-tracker-frontend
     runtime: static

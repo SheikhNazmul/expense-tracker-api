@@ -1,6 +1,7 @@
 
-```markdown
 # Expense Tracker API
+
+**Live app:** [Open Moneta](https://sheikhnazmul.github.io/expense-tracker-api/)
 
 This repository includes a full-stack personal expense tracker: a FastAPI service and a responsive React dashboard in `frontend/`.
 
